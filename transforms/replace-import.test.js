@@ -45,6 +45,20 @@ defineInlineTest(
   'replace import (import namespace)'
 );
 
+
+defineInlineTest(
+  transform,
+  {
+    identifier: transformOptions.identifier,
+    aliasIdentifierTo: 'MagicLinks',
+    currentImportPackage: transformOptions.current,
+    targetImportPackage: transformOptions.target,
+  },
+  `import {${transformOptions.identifier}} from "${transformOptions.current}"`,
+  `import { MagicLinks as ${transformOptions.identifier} } from "${transformOptions.target}";`,
+  'replace import (alias import)'
+);
+
 defineInlineTest(
   transform,
   {

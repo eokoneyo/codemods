@@ -10,14 +10,15 @@ const assert = require('assert');
  * @param {string}  options.targetImportPackage
  * @param {boolean} [options.rewriteAsDefault]
  * @param {boolean} [options.rewriteAsNamespaceImport]
+ * @param {string}  [options.aliasIdentifierTo]
  * @returns
  *
  */
 module.exports = function replaceImportTransformer(file, api, options) {
   assert.notStrictEqual(
-    options.rewriteAsDefault && options.rewriteAsNamespaceImport,
+    options.rewriteAsDefault && options.rewriteAsNamespaceImport && Boolean(options.aliasIdentifierTo),
     true,
-    'options `rewriteAsDefault` and `rewriteAsNamespaceImport` cannot both be specified as true'
+    'operations `rewriteAsDefault`, `rewriteAsNamespaceImport` and `aliasIdentifierTo` cannot be applied in conjunction'
   );
 
   const j = api.jscodeshift;
@@ -50,6 +51,8 @@ module.exports = function replaceImportTransformer(file, api, options) {
             ? [j.importDefaultSpecifier(j.identifier(options.identifier))]
             : options.rewriteAsNamespaceImport
             ? [j.importNamespaceSpecifier(j.identifier(options.identifier))]
+            : options.aliasIdentifierTo
+            ? [j.importSpecifier(j.identifier(options.aliasIdentifierTo), j.identifier(options.identifier))]
             : // remap as is used in the module it is imported from to the new module
               identifierSpecifier.nodes(),
           j.stringLiteral(options.targetImportPackage)
