@@ -1,5 +1,5 @@
 const defineInlineTest = require('jscodeshift/dist/testUtils').defineInlineTest;
-const transform = require('./update-props-for-react-component');
+const transform = require('./rename-props-for-react-component');
 
 const transformOptions = {
   componentName: 'RedirectAppLinks',
@@ -21,7 +21,7 @@ defineInlineTest(
         application: value
     }} />
 `,
-  'update component props (nest prop to be updated as object)'
+  'rename component props (nest prop to be updated as object)'
 );
 
 defineInlineTest(
@@ -33,5 +33,5 @@ defineInlineTest(
   `
     <${transformOptions.componentName} coreStart={value} />
 `,
-  'update component props (replace prop name as is)'
+  'rename component props (replace prop name as is)'
 );

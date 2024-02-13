@@ -45,7 +45,6 @@ defineInlineTest(
   'replace import (import namespace)'
 );
 
-
 defineInlineTest(
   transform,
   {
