@@ -8,7 +8,7 @@
  * @param {string} options.newProp
  * @param {string} options.nestOldAsObject
  */
-module.exports = function updateComponentPropsTransformer(file, api, options) {
+module.exports = function renameComponentPropsTransformer(file, api, options) {
   const j = api.jscodeshift;
 
   const root = j(file.source);
